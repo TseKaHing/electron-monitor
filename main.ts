@@ -10,8 +10,10 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 function createWindow() {
   // Create the browser window.
   MAIN_WIN = new BrowserWindow({
-    width: 1024,
-    height: 768,
+    width: 600,
+    height: 600,
+    minWidth: 600,
+    minHeight: 600,
     icon: __dirname + '/favicon.ico',
     webPreferences: {
       nodeIntegration: true,
@@ -26,19 +28,6 @@ function createWindow() {
       slashes: true
     })
   );
-  // const startUrl = process.env.NODE_ENV === 'development' ?
-  //   url.format({
-  //     pathname: path.join(__dirname, "../public/index.html"),
-  //     protocol: "file:",
-  //     slashes: true
-  //   }) :
-  //   url.format({
-  //     pathname: path.join(__dirname, "../dist/index.html"),
-  //     protocol: "file:",
-  //     slashes: true
-  //   })
-
-  // MAIN_WIN.loadURL(startUrl)
   // Open the DevTools.
   // MAIN_WIN.openDevTools();
   MAIN_WIN.on('closed', function () {
