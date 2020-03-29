@@ -4,12 +4,9 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
       "@public/*": ["public/*"],
-      "@main/*": ["src/main/*"],
-      "@models/*": ["src/models/*"],
       "@renderer*/": ["src/renderer/*"],
-      "@utils/*": ["src/utils/*"]
+      "@views/*": ["src/views/*"]
     },
     "module": "commonjs",
     "moduleResolution": "node",

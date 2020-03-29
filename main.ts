@@ -1,5 +1,3 @@
-// import { MenuItemConstructorOptions } from "electron";
-
 import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from 'electron'
 const url = require('url')
 const path = require('path')
@@ -10,11 +8,12 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 function createWindow() {
   // Create the browser window.
   MAIN_WIN = new BrowserWindow({
-    width: 600,
-    height: 600,
-    minWidth: 600,
-    minHeight: 600,
+    width: 1000,
+    height: 800,
+    minWidth: 1000,
+    minHeight: 800,
     icon: __dirname + '/favicon.ico',
+    backgroundColor: '#f2f2f2',
     webPreferences: {
       nodeIntegration: true,
       webSecurity: true,
