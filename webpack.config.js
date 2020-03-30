@@ -28,6 +28,10 @@ const commonConfig = {
   module: {
     rules: [
       {
+        test: /\.md$/,
+        use: "raw-loader"
+      },
+      {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         loader: 'ts-loader',
@@ -42,7 +46,7 @@ const commonConfig = {
         options: {
           name: '[path][name].[ext]',
         },
-      },
+      }
     ],
   },
 };
