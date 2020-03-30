@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom';
-import './header.less'
+import './index.less'
 interface HeaderItem {
   name: string,
   path: string
@@ -31,13 +31,11 @@ export default class header extends React.Component {
         {
           headerList.map((item: HeaderItem, idx: number) => {
             return (
-              <nav className="nav" key={idx}>
-                <Link style={{ textDecoration: 'none', color: '#545454' }} to={item.path}>{item.name}</Link>
-              </nav>
+              <Link className="nav" style={{ color: '#808695', textDecoration: 'none' }} to={item.path} key={idx} replace> {item.name}</Link>
             )
           })
         }
-      </header>
+      </header >
     )
   }
 }
