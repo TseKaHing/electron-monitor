@@ -1,14 +1,13 @@
 import * as React from 'react'
 import md from './README.md'
 const ReactMarkdown = require('react-markdown') //  使用import导入报语法错
-import './markdown.less'
+import '@public/markdown.less'
 import './index.less'
 
 export default class Docs extends React.Component<any, any>{
   constructor(props: any) {
     super(props);
   }
-
   render = () => {
     return (
       <div className="layout main">

@@ -27,6 +27,7 @@ const commonConfig = {
   },
   module: {
     rules: [
+      //  load markdown resource
       {
         test: /\.md$/,
         use: "raw-loader"
@@ -36,6 +37,7 @@ const commonConfig = {
         exclude: /node_modules/,
         loader: 'ts-loader',
       },
+      //  load less preprocesser
       {
         test: /\.(less|css)$/,
         use: ['style-loader', 'css-loader', 'less-loader'],

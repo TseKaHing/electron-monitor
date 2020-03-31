@@ -32,6 +32,7 @@
   "dependencies": {
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
+    "antd": "^4.1.0",
     "react": "^16.12.0",
     "react-dom": "^16.13.1",
     "react-markdown": "^4.3.1",
@@ -43,6 +44,7 @@
     "@types/react-router-dom": "^4.3.5",
     "acorn": "^6.4.0",
     "ajv": "^6.10.2",
+    "babel-plugin-import": "^1.13.0",
     "copy-pkg-json-webpack-plugin": "0.0.38",
     "cross-env": "^5.2.1",
     "css-loader": "^1.0.1",
@@ -68,25 +70,23 @@
     "ts-loader": "^5.4.5",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.9.0",
-    "tslint": "^5.20.1",
-    "tslint-microsoft-contrib": "^5.2.1",
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jazzyXie/electron-template"
+    "url": "git+https://github.com/jazzyXie/electron-monitor"
   },
   "keywords": [
-    "boilerplate",
+    "Monitor",
     "Electron",
     "React",
     "Typescript",
     "Webpack"
   ],
   "bugs": {
-    "url": "https://github.com/Devtography/electron-react-typescript-webpack-boilerplate/issues"
+    "url": "https://github.com/jazzyXie/electron-monitor.git/issues"
   },
-  "homepage": "https://github.com/Devtography/electron-react-typescript-webpack-boilerplate#readme"
+  "homepage": "https://github.com/jazzyXie/electron-monitor#readme"
 }
