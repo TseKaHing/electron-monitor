@@ -1,10 +1,11 @@
 import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from 'electron'
-const url = require('url')
-const path = require('path')
+import url from 'url'
+import path from 'path'
+
+app.allowRendererProcessReuse = true
 
 let MAIN_WIN: Electron.BrowserWindow | null;
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
-
 function createWindow() {
   // Create the browser window.
   MAIN_WIN = new BrowserWindow({
@@ -20,13 +21,7 @@ function createWindow() {
       devTools: process.env.NODE_ENV === "production" ? false : true
     }
   });
-  MAIN_WIN.loadURL(
-    url.format({
-      pathname: path.join(__dirname, "/index.html"),
-      protocol: "file:",
-      slashes: true
-    })
-  );
+  MAIN_WIN.loadURL(`file://${__dirname}/index.html`);
   // Open the DevTools.
   // MAIN_WIN.openDevTools();
   MAIN_WIN.on('closed', function () {
