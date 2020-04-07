@@ -18,7 +18,7 @@ export default class ExpSider extends React.Component<any, any>{
         <Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="1">
             <PieChartOutlined />
-            <span>Option 1</span>
+            <span>MY WEB</span>
           </Menu.Item>
           <Menu.Item key="2">
             <DesktopOutlined />

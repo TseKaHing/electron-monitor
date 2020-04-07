@@ -30,9 +30,11 @@
   "author": "jazzyXie",
   "license": "MIT",
   "dependencies": {
+    "@types/node-uuid": "^0.0.28",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
     "antd": "^4.1.0",
+    "node-uuid": "^1.4.8",
     "react": "^16.12.0",
     "react-dom": "^16.13.1",
     "react-markdown": "^4.3.1",
