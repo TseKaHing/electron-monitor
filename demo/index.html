@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>DEMO</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    !(function (a, b, c, d) {
+      a[d] = a[d] || {}
+      a[d].options = {
+        _user_id: '123',
+        disableHook: false,
+        disableJS: false,
+        disableResource: false
+      }
+      var _bury_script = document.createElement("script")
+      _bury_script.setAttribute("crossorigin", "anonymous")
+      _bury_script.setAttribute("src", c)
+      document.body.insertBefore(_bury_script, document.body.firstChild)
+    })(window, document, 'http://localhost:3000/web-monitor-sdk.js', '_bury')
+  </script>
+  <noscript>
+    <strong>We're sorry but frontend_monitor doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <button class="btn1">错误测试按钮1</button>
+  <button class="btn2">错误测试按钮2</button>
+  <button class="btn3">错误测试按钮3</button>
+  <img src="https://avatars3.githubusercontent.com/u/22117876?s=460&v=4" alt="">
+  <img src="test.png" alt="">
+  <script>
+    document.querySelector('.btn1').onclick = () => {
+      setTimeout(() => {
+        console.log(button)
+      }, 0)
+    }
+
+    document.querySelector('.btn2').onclick = () => {
+      new Promise((resolve, reject) => {
+        reject({
+          msg: 'test.js promise is error'
+        })
+      })
+    }
+
+    document.querySelector('.btn3').onclick = () => {
+      throw ('这是一个手动扔出的错误')
+    }
+  </script>
+</body>
+
+</html>
