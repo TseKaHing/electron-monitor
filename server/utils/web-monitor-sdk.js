@@ -143,7 +143,7 @@ function _WEB_MONITOR() {
 function _ajax(options) {
   options = options || {};
   options.type = (options.type || "get").toLowerCase()
-  options.dataType = options.dataType || "json";
+  // options.dataType = options.dataType || "json";
   var params = formatParams(options.data);
   if (window.XMLHttpRequest) {
     var xhr = new XMLHttpRequest();
@@ -167,7 +167,7 @@ function _ajax(options) {
   } else if (options.type == "post") {
     xhr.open("post", options.url, true);
     //设置表单提交时的内容类型
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(options.data));
   }
   //格式化参数

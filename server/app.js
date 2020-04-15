@@ -6,8 +6,8 @@ const fs = require('fs')
 
 const analysis = require('./api/parse')
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json())
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(express.json())
 
 app.all('*', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
@@ -19,7 +19,7 @@ app.use(express.static(path.resolve(__dirname, './dist')))
 app.use('/parse', analysis)
 
 app.get('*', (req, res) => {
-  const html = fs.readFileSync(path.resolve(__dirname, './dist/web-monitor-sdk.js'), 'utf-8')
+  const html = fs.readFileSync(path.resolve(__dirname, './utils/web-monitor-sdk.js'), 'utf-8')
   res.send(html)
 })
 
