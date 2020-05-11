@@ -1,12 +1,13 @@
 function _WEB_MONITOR() {
   //  上报的数据
-  const _report_data = {
+  var _report_data = {
     _report_url: "",
-    _performance: {},
-    _resources: {},
+    _performance: _get_performance() || {},
+    _resources: _get_resources() || {},
     _errors: [],
+    _pv: 1,
     _user_conf: {
-      _protocal: document.location.protocol.split(':')[0] || "http",
+      _protocol: document.location.protocol.split(':')[0] || "http",
       _domain: document.domain || "",
       _port: document.location.host.split(':')[1],
       _title: document.title || "",
@@ -15,9 +16,51 @@ function _WEB_MONITOR() {
       _screen_width: window.screen.width,
       _screen_height: window.screen.height,
       _color_depth: window.screen.colorDepth,
-      _language: navigator.language
+      _language: navigator.language,
+      _location: _get_location() || {}
     },
     _bury: window["_bury"].options
+  }
+  // 统计pv值
+  function _cal_uv() {
+    // var pv = 0
+    var location = window.location
+    var oldUrl = location.href
+    var oldHash = location.hash
+    setInterval(() => {
+      var newUrl = location.href
+      var newHash = location.hash
+      if (newUrl !== oldUrl || newHash !== oldHash) {
+        oldUrl = newUrl
+        oldHash = newHash
+        _report_data._pv++
+        _upload()
+      }
+    }, 1000)
+  }
+  // 获取地理位置信息
+  function _get_location() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    }
+    else {
+      throw new Error("Geolocation is not supported by this browser.")
+    }
+    function showPosition(position) {
+      let _position = {
+        _latitude: position.coords.latitude,
+        _longitude: position.coords.longitude,
+        _altitude: position.coords.altitude,
+        _accuracy: position.coords.accuracy,
+        _altitude_accuracy: position.coords.altitudeAccuracy,
+        _speed: position.coords.speed
+      }
+      _report_data._user_conf._location = _position
+    }
+    function showError(error) {
+      throw new Error(error)
+
+    }
   }
   // 获取性能信息
   function _get_performance() {
@@ -37,7 +80,7 @@ function _WEB_MONITOR() {
       //  页面 onready 时间
       _ready_t: timing.fetchStart - timing.navigationStart || 0,
       //  页面重定向时间
-      _redirect: timing.redirectEnd - timing.redirectStart || 0,
+      _redirect_t: timing.redirectEnd - timing.redirectStart || 0,
       //  页面 unload 时间
       _unload_t: timing.unloadEventEnd - timing.unloadEventStart || 0,
       //  request 请求耗时
@@ -59,7 +102,7 @@ function _WEB_MONITOR() {
       img: [],
       link: [],
       fetch: [],
-      _create_time: new Date().getTime()
+      _create_time: Math.round(new Date() / 1000)
     }
     _resource_from_performance.forEach(item => {
       arr = _resource[item.initiatorType]
@@ -74,15 +117,24 @@ function _WEB_MONITOR() {
   }
 
   window.onload = function () {
+    console.log(_report_data._bury);
+
     if (window.requestIdleCallback) {
       window.requestIdleCallback(() => {
         _report_data._performance = _get_performance()
-        _report_data._resources = _get_resources()
+        if (_report_data._bury.reportResource) {
+          _report_data._resources = _get_resources()
+        }
+
+        // _report_data._user_conf._position = _get_location()
       })
     } else {
       setTimeout(() => {
         _report_data._performance = _get_performance()
-        _report_data._resources = _get_resources()
+        if (_report_data._bury.reportResource) {
+          _report_data._resources = _get_resources()
+        }
+        // _report_data._user_conf._position = _get_location()
       }, 0)
     }
     _upload()
@@ -109,7 +161,7 @@ function _WEB_MONITOR() {
       _col: column, // 发生错误时的代码列数
       _msg: err && err.stack ? err.stack : event, // 错误信息
       _source_url: source_url, // 错误文件
-      _create_time: new Date().getTime()
+      _create_time: Math.round(new Date() / 1000)
     })
     _upload()
   }
@@ -118,7 +170,7 @@ function _WEB_MONITOR() {
     _report_data._errors.push({
       _type: 'promise',
       _msg: (event.reason && event.reason.msg) || event.reason || '',
-      _create_time: new Date().getTime()
+      _create_time: Math.round(new Date() / 1000)
     })
     _upload()
   })
@@ -127,6 +179,7 @@ function _WEB_MONITOR() {
     _report_data._report_url = url
   }
   function _upload() {
+    console.log(_report_data);
     _ajax({
       url: _report_data._report_url,
       type: "post",
@@ -136,7 +189,9 @@ function _WEB_MONITOR() {
       }
     });
   }
-  return { _set_url }
+  _set_url("http://localhost:3000/parse/analysis")
+  _cal_uv()
+  // return { _set_url, _get_performance, _get_resources }
 }
 
 // 重写 ajax
@@ -181,6 +236,9 @@ function _ajax(options) {
 
 }
 (function () {
-  var { _set_url } = new _WEB_MONITOR()
-  _set_url("http://localhost:3000/parse/analysis")
+  // var { _set_url, _get_performance, _get_resources } = new _WEB_MONITOR()
+  _WEB_MONITOR()
+  // _set_url("http://localhost:3000/parse/analysis")
+  // _get_performance()
+  // _get_resources()
 })()

@@ -36,21 +36,20 @@ JavaScript + NodeJS + TypeScript + Electron + React + Express + MongoDB
 （一）数据埋点阶段，在正常的 HTML 页面下 body 的第一行插入以下一段 js 脚本，即埋点，a[d] 即我们要埋的全局对象，用于收集用户行为，然后通过创建 script 标签，设置其异步执行，并将 src 属性指向收集用户行为数据的 sdk，最终过程是执行该 SDK。
 
 ``` 
- <script type="text/javascript">
-    !(function (a, b, c, d) {
-      a[d] = a[d] || {}
-      a[d].options = {
-        _key: '123',
-        disableHook: false,
-        disableJS: false,
-        disableResource: false
-      }
-      var _bury_script = document.createElement("script")
-      _bury_script.setAttribute("crossorigin", "anonymous")
-      _bury_script.setAttribute("src", c)
-      document.body.insertBefore(\_bury_script, document.body.firstChild)
-    })(window, document, 'http://localhost:3000/web-monitor-sdk.js', '\_bury')
-  </script>
+  <script type="text/javascript">
+    !(function (a, b, c, d) {
+      a[d] = a[d] || {}
+      a[d].options = {
+        _key: '123',
+        notification: true,
+        reportResource: true,
+      }
+      var _bury_script = document.createElement("script")
+      _bury_script.setAttribute("crossorigin", "anonymous")
+      _bury_script.setAttribute("src", c)
+      document.body.insertBefore(_bury_script, document.body.firstChild)
+    })(window, document, 'http://localhost:3000/web-monitor-sdk.js', '_bury')
+  </script>
 ```
 
 （二）数据收集阶段，获取用户的各种信息，如 performance 信息，上一条地址，语言，分辨率，域名，端口，协议、标题、用户代理，以及错误信息等，最终通过 http 请求上报到服务端。
@@ -63,7 +62,7 @@ JavaScript + NodeJS + TypeScript + Electron + React + Express + MongoDB
     _resources: {},
     _errors: [],
     _user_conf: {
-      _protocal: document.location.protocol.split(':')[0] || "http",
+      _protocol: document.location.protocol.split(':')[0] || "http",
       _domain: document.domain || "",
       _port: document.location.host.split(':')[1],
       _title: document.title || "",

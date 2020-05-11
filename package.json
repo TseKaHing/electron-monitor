@@ -30,10 +30,13 @@
   "author": "jazzyXie",
   "license": "MIT",
   "dependencies": {
+    "@antv/g2plot": "^1.1.2",
     "@types/node-uuid": "^0.0.28",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
     "antd": "^4.1.0",
+    "axios": "^0.19.2",
+    "bizcharts": "^4.0.3",
     "node-uuid": "^1.4.8",
     "react": "^16.12.0",
     "react-dom": "^16.13.1",

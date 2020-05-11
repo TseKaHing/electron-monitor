@@ -1,12 +1,13 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom';
 import './index.less'
 import { Layout, Menu } from 'antd'
 import {
   DesktopOutlined,
   PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
+  SettingOutlined,
+  BugOutlined,
+  LineChartOutlined,
 } from '@ant-design/icons';
 const { Sider } = Layout
 const { SubMenu } = Menu
@@ -14,43 +15,27 @@ export default class ExpSider extends React.Component<any, any>{
   render = () => {
     return (
       <Sider theme="light" className="sider" >
-        <div className="logo"></div>
+        <div className="logo">FE-MONITOR</div>
         <Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="1">
             <PieChartOutlined />
-            <span>MY WEB</span>
+            <Link to="/exp/web"><span>My Web</span></Link>
           </Menu.Item>
           <Menu.Item key="2">
             <DesktopOutlined />
-            <span>Option 2</span>
+            <Link to="/exp/perf"><span>Access Speed</span></Link>
           </Menu.Item>
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <UserOutlined />
-                <span>User</span>
-              </span>
-            }
-          >
-            <Menu.Item key="3">Tom</Menu.Item>
-            <Menu.Item key="4">Bill</Menu.Item>
-            <Menu.Item key="5">Alex</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <TeamOutlined />
-                <span>Team</span>
-              </span>
-            }
-          >
-            <Menu.Item key="6">Team 1</Menu.Item>
-            <Menu.Item key="8">Team 2</Menu.Item>
-          </SubMenu>
-          <Menu.Item key="9">
-            <FileOutlined />
+          <Menu.Item key="3">
+            <BugOutlined />
+            <Link to="/exp/err"><span>JS Error</span></Link>
+          </Menu.Item>
+          <Menu.Item key="4">
+            <LineChartOutlined />
+            <Link to="/exp/res"> <span>Resource Detail</span></Link>
+          </Menu.Item>
+          <Menu.Item key="5">
+            <SettingOutlined />
+            <Link to="/exp/conf"><span>Configuration</span></Link>
           </Menu.Item>
         </Menu>
       </Sider>

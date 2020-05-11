@@ -3,6 +3,8 @@ const app = new express()
 const bodyParser = require('body-parser')
 const path = require('path')
 const fs = require('fs')
+const mongoose = require('mongoose')
+// const db = mongoose.connect()
 
 const analysis = require('./api/parse')
 app.use(bodyParser.json())

@@ -13,10 +13,9 @@
     !(function (a, b, c, d) {
       a[d] = a[d] || {}
       a[d].options = {
-        _user_id: '123',
-        disableHook: false,
-        disableJS: false,
-        disableResource: false
+        _key: '123',
+        notification: true,
+        reportResource: true,
       }
       var _bury_script = document.createElement("script")
       _bury_script.setAttribute("crossorigin", "anonymous")
@@ -32,7 +31,7 @@
   <button class="btn2">错误测试按钮2</button>
   <button class="btn3">错误测试按钮3</button>
   <img src="https://avatars3.githubusercontent.com/u/22117876?s=460&v=4" alt="">
-  <img src="test.png" alt="">
+  <!-- <img src="test.png" alt=""> -->
   <script>
     document.querySelector('.btn1').onclick = () => {
       setTimeout(() => {
