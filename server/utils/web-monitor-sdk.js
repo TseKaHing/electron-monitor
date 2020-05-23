@@ -125,8 +125,6 @@ function _WEB_MONITOR() {
         if (_report_data._bury.reportResource) {
           _report_data._resources = _get_resources()
         }
-
-        // _report_data._user_conf._position = _get_location()
       })
     } else {
       setTimeout(() => {
@@ -134,7 +132,6 @@ function _WEB_MONITOR() {
         if (_report_data._bury.reportResource) {
           _report_data._resources = _get_resources()
         }
-        // _report_data._user_conf._position = _get_location()
       }, 0)
     }
     _upload()
@@ -191,7 +188,6 @@ function _WEB_MONITOR() {
   }
   _set_url("http://localhost:3000/parse/analysis")
   _cal_uv()
-  // return { _set_url, _get_performance, _get_resources }
 }
 
 // 重写 ajax
@@ -236,9 +232,5 @@ function _ajax(options) {
 
 }
 (function () {
-  // var { _set_url, _get_performance, _get_resources } = new _WEB_MONITOR()
   _WEB_MONITOR()
-  // _set_url("http://localhost:3000/parse/analysis")
-  // _get_performance()
-  // _get_resources()
 })()

@@ -8,28 +8,28 @@ interface CardItem {
 const cardList = [
   {
     title: "页面性能监控",
-    text: ""
+    text: "使用Performance监听页面性能"
   },
   {
     title: "JS错误监控",
-    text: ""
+    text: "通过事件机制上传错误"
   },
   {
     title: "自动错误报警",
-    text: ""
+    text: "桌面通知/邮件告知用户错误信息"
   },
   {
     title: "pv/pu收集",
-    text: ""
+    text: "用户活跃量收集"
   },
-  {
-    title: "IP转换工具",
-    text: ""
-  },
-  {
-    title: "多个监测站点",
-    text: ""
-  }
+  // {
+  //   title: "IP转换工具",
+  //   text: ""
+  // },
+  // {
+  //   title: "多个监测站点",
+  //   text: ""
+  // }
 ]
 export default class Home extends React.Component<any, any>{
   render = () => {
@@ -50,13 +50,14 @@ export default class Home extends React.Component<any, any>{
                 return (
                   <div className="function-card" key={`${idx}`}>
                     <span className="function-card-title">{cardItem.title}</span>
-                    <span className="function-card-text">{cardItem.text}</span>
+                    <span className="function-card-text" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'grey' }}>{cardItem.text}</span>
                   </div>
                 )
               })
             }
           </div>
         </section>
+        <footer style={{ height: '2rem' }}></footer>
       </section>
     )
   }
