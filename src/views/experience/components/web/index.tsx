@@ -5,10 +5,11 @@ import { BankTwoTone, EllipsisOutlined, SettingOutlined } from '@ant-design/icon
 var uuid = require('node-uuid');
 const { Meta } = Card
 import axios from 'axios'
+import Error from '../error';
 axios.defaults.timeout = 1000 * 15;
 axios.defaults.headers['Content-Type'] = 'application/json'
 interface IState {
-  site: {
+  _site: {
     _key?: string | null,
     name?: string | null
   },
@@ -26,7 +27,7 @@ export default class Web extends React.Component<any, IState> {
   constructor(props: any) {
     super(props)
     this.state = {
-      site: {},
+      _site: {},
       visible: false,
       isEmpty: false,
       _input: "",
@@ -39,19 +40,21 @@ export default class Web extends React.Component<any, IState> {
     }
   }
   componentDidMount = () => {
-    let { site, isEmpty } = this.state
+    let { _site, isEmpty } = this.state
     if (localStorage.getItem("_key") || localStorage.getItem("name")) {
       this.setState({
         isEmpty: true
       })
     }
     if (localStorage.getItem("_key")) {
-      site._key = localStorage.getItem("_key")
+      _site._key = localStorage.getItem("_key")
     }
     if (localStorage.getItem("name")) {
-      site.name = localStorage.getItem("name")
+      _site.name = localStorage.getItem("name")
     }
-    axios.get('http://localhost:3000/parse/getsite')
+    let _key = localStorage.getItem("_key")
+    let _token = localStorage.getItem("_token")
+    axios.post('http://localhost:3000/parse/getsite', { _key, _token })
       .then(res => {
         if (res.data.code == 200) {
           let { _user_conf } = res.data.Performance
@@ -65,7 +68,9 @@ export default class Web extends React.Component<any, IState> {
           })
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        throw new Error(err)
+      })
   }
   showModal = () => {
     this.setState({
@@ -73,27 +78,30 @@ export default class Web extends React.Component<any, IState> {
     });
   };
   handleOk = () => {
-    let { site, _input } = this.state
+    let { _site, _input } = this.state
     let web = {
       _key: uuid.v4().replace(/-/g, ""),
       name: _input
     }
     axios.post('http://localhost:3000/parse/addsite', web)
       .then(res => {
-        console.log(res);
-        if (res.data.code == 200) {
-          let res_site = res.data.site
-          site._key = res_site._key
-          site.name = res_site.name
-          localStorage.setItem("_key", res.data.site._key)
-          localStorage.setItem("name", res.data.site.name)
+        let { code, site, token } = res.data
+        if (code == 200) {
+          let res_site = site
+          _site._key = res_site._key
+          _site.name = res_site.name
+          localStorage.setItem("_key", res_site._key)
+          localStorage.setItem("name", res_site.name)
+          localStorage.setItem("_token", token)
           this.setState({
             isEmpty: true
           })
         }
 
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        throw new Error(err)
+      })
   };
   handleDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e && e.target && e.target.value) {
@@ -109,8 +117,7 @@ export default class Web extends React.Component<any, IState> {
     this.props.history.push("/exp/conf");
   }
   render = () => {
-    const { site, visible, isEmpty, domain, title, resolution, userAgent, language, colorDepth } = this.state
-    console.log(site, visible, isEmpty, domain, title, resolution, userAgent, language, colorDepth);
+    const { _site, visible, isEmpty, domain, title, resolution, userAgent, language, colorDepth } = this.state
     // localStorage.clear()
     return (
       <div>

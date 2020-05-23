@@ -10,6 +10,7 @@ import {
   Legend
 } from 'bizcharts';
 import { Divider, Table } from 'antd'
+import Error from '../error';
 
 const columns = [
   {
@@ -36,11 +37,12 @@ export default class Performance extends React.Component<any, any> {
     }
   }
   componentDidMount() {
-    axios.get('http://localhost:3000/parse/getsite')
+    let _key = localStorage.getItem("_key")
+    let _token = localStorage.getItem("_token")
+    axios.post('http://localhost:3000/parse/getsite', { _key, _token })
       .then(res => {
         if (res.data.code == 200) {
           let { _performance, _pv, _uv, _user_conf } = res.data.Performance
-          // console.log(res.data.Performance)
           let { performance } = this.state
           if (_performance) {
             for (let key in _performance) {
@@ -57,8 +59,6 @@ export default class Performance extends React.Component<any, any> {
               key: 'IG6BZ-IJZKP-IIRDQ-VFOWP-FM2Y5-WJBIM'
             }
           }).then(res => {
-            console.log(res);
-
             this.setState({
               location: res.data.result.address,
               performance,
@@ -66,16 +66,17 @@ export default class Performance extends React.Component<any, any> {
               uv: _uv
             })
           }).catch(err => {
-            console.log(err);
+            throw new Error(err)
           })
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        throw new Error(err)
+      })
   }
   render() {
     let display = []
     let { performance, uv, pv, location } = this.state
-    console.log(performance, uv, pv, location);
     let _analysis: any = [
       {
         _location: location,
@@ -84,14 +85,6 @@ export default class Performance extends React.Component<any, any> {
         key: 0
       }
     ]
-    // _analysis.push({
-    //   _location: location,
-    //   _uv: uv,
-    //   _pv: pv,
-    // })
-    // for (let i in _analysis) {
-    //   _analysis.key = i
-    // }
     // 深拷贝
     for (let i in performance) {
       var name = performance[i].name

@@ -117,8 +117,6 @@ function _WEB_MONITOR() {
   }
 
   window.onload = function () {
-    console.log(_report_data._bury);
-
     if (window.requestIdleCallback) {
       window.requestIdleCallback(() => {
         _report_data._performance = _get_performance()
@@ -176,7 +174,6 @@ function _WEB_MONITOR() {
     _report_data._report_url = url
   }
   function _upload() {
-    console.log(_report_data);
     _ajax({
       url: _report_data._report_url,
       type: "post",

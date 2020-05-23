@@ -4,7 +4,7 @@ import './index'
 import axios from 'axios'
 axios.defaults.timeout = 1000 * 15;
 axios.defaults.headers['Content-Type'] = 'application/json'
-import { Collapse, Divider } from 'antd';
+import { Collapse, Divider, notification } from 'antd';
 
 const { Panel } = Collapse;
 export default class Error extends React.Component<any, any> {
@@ -17,20 +17,18 @@ export default class Error extends React.Component<any, any> {
   }
   componentDidMount = () => {
     let { config } = this.state
-
-    axios.get('http://localhost:3000/parse/getsite')
+    let _key = localStorage.getItem("_key")
+    let _token = localStorage.getItem("_token")
+    axios.post('http://localhost:3000/parse/getsite', { _key, _token })
       .then(res => {
         if (res.data.code == 200) {
           let { _user_conf, _errors } = res.data.Performance
-          console.log(666, res.data.Performance);
           axios.get('https://apis.map.qq.com/ws/geocoder/v1/', {
             params: {
               location: _user_conf._location._latitude + ',' + _user_conf._location._longitude,
               key: 'IG6BZ-IJZKP-IIRDQ-VFOWP-FM2Y5-WJBIM'
             }
           }).then(res => {
-            console.log(777, res.data);
-
             this.setState({
               config: {
                 ..._user_conf,
@@ -39,20 +37,33 @@ export default class Error extends React.Component<any, any> {
               error: _errors
             })
           }).catch(err => {
-            console.log(err);
+            throw new Error(err)
           })
-
+          if (!_user_conf.notification) {
+            notification['error']({
+              message: "站点错误报警!!!",
+              description:
+                <div>
+                  <p>错误类型：{_errors[_errors.length - 1]._type}</p>
+                  <p>错误发生行：{_errors[_errors.length - 1]._row ? _errors[_errors.length - 1]._row : 0}</p>
+                  <p>错误发生列：{_errors[_errors.length - 1]._col ? _errors[_errors.length - 1]._col : 0}</p>
+                  <p>错误信息：{_errors[_errors.length - 1]._msg.message || _errors[_errors.length - 1]._msg}</p>
+                  <p>错误发生URL：{_errors[_errors.length - 1]._source_url ? _errors[_errors.length - 1]._source_url : 'not known'}</p>
+                  <p>错误发生时间：{this.timestampToTime(_errors[_errors.length - 1]._create_time)}</p>
+                </div>
+            });
+          }
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        throw new Error(err)
+      })
   }
   timestampToTime = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
   }
   render() {
     let { config, error } = this.state
-    console.log(config, error);
-
     let _conf = {
       domain: config._protocol + '://' + config._domain + ':' + config._port,
       referrer: config._referrer,

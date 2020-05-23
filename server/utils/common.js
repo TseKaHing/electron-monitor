@@ -29,7 +29,7 @@ function sendError(err) {
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return console.log(error);
+      throw new Error(err)
     }
     console.log('Message sent: %s', info.messageId);
     // Message sent: <04ec7731-cc68-1ef6-303c-61b0f796b78f@qq.com>

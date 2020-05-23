@@ -54,12 +54,13 @@ export default class Resource extends React.Component<any, any> {
     }
   }
   componentDidMount() {
-    axios.get('http://localhost:3000/parse/getsite')
+    let _key = localStorage.getItem("_key")
+    let _token = localStorage.getItem("_token")
+    axios.post('http://localhost:3000/parse/getsite', { _key, _token })
       .then(res => {
         if (res.data.code == 200) {
           let { _resources } = res.data.Performance
           if (_resources) {
-            console.log(_resources);
             let _res = []
             for (let key in _resources) {
               if (_resources[key].length !== 0) {
@@ -79,7 +80,9 @@ export default class Resource extends React.Component<any, any> {
           }
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        throw new Error(err)
+      })
   }
   search = (key: string) => {
     let { filter_resource, resource } = this.state
@@ -90,7 +93,6 @@ export default class Resource extends React.Component<any, any> {
       })
     } else {
       for (let i = 0; i < filter_resource.length; i++) {
-        console.log(filter_resource[i]);
         if (filter_resource[i]._name.indexOf(key) > -1) {
           search.push(filter_resource[i])
         }
