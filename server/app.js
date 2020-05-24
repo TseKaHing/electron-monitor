@@ -21,8 +21,8 @@ app.use(express.static(path.resolve(__dirname, './dist')))
 app.use('/parse', analysis)
 
 app.get('*', (req, res) => {
-  const html = fs.readFileSync(path.resolve(__dirname, './utils/web-monitor-sdk.js'), 'utf-8')
-  res.send(html)
+  const sdk = fs.readFileSync(path.resolve(__dirname, './utils/web-monitor-sdk.js'), 'utf-8')
+  res.send(sdk)
 })
 
 const PORT = 3000

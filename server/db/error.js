@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema
 
-const SiteSchema = new Schema({
+const ErrorSchema = new Schema({
   _key: { type: String },
-  name: { type: String },
+  userAgent: { type: String },
+  resolution: { type: String },
+  ip: { type: String },
 });
 
-Error = mongoose.model('Error', SiteSchema)
+Err = mongoose.model('Error', ErrorSchema)
 
-module.exports = Error
+module.exports = Err

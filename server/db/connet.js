@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Site = require('./site')
-const Performance = require('./performance')
+const Perf = require('./performance')
+const Alarm = require('./alarm')
+const Err = require('./error')
 
 mongoose.connect('mongodb://localhost:27017/monitor', {
   useNewUrlParser: true,
@@ -15,8 +17,9 @@ db.once('open', () => console.log('Mongo connection successed'));
 
 var Models = {
   Site,
-  Performance,
-  Error
+  Perf,
+  Alarm,
+  Err
 }
 
 module.exports = Models

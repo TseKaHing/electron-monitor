@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 
-function sendError(err) {
+function sendError(err, toWhom) {
   let transporter = nodemailer.createTransport({
     service: 'qq',
     port: 465, // SMTP 端口
@@ -12,7 +12,7 @@ function sendError(err) {
   });
   let mailOptions = {
     from: '1243756230@qq.com', // 发送者邮箱
-    to: 'jazzyxie@dingtalk.com', // 接收者邮箱列表
+    to: toWhom, // 接收者邮箱列表
     subject: '站点错误报警!!!',
     html: `
       <div>

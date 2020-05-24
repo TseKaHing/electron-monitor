@@ -16,6 +16,6 @@ const PerformanceSchema = new Schema({
   _uv: { type: String || Number }
 });
 
-Performance = mongoose.model('Performance', PerformanceSchema)
+Perf = mongoose.model('Performance', PerformanceSchema)
 
-module.exports = Performance
+module.exports = Perf

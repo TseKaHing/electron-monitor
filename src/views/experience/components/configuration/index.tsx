@@ -23,7 +23,7 @@ export default class Configuration extends React.Component<any, any> {
   }
   render() {
     let { notification, reportResource } = this.state
-    var bury_script = `<script type="text / javascript">
+    var bury_script = `<script type="text/javascript">
         !(function (a, b, c, d) {
           a[d] = a[d] || {}
           a[d].options = {

@@ -3,7 +3,6 @@ import PlaceHolder from '../../assets/img/future.svg'
 import { Button, Modal, Input, Card } from 'antd';
 import { BankTwoTone, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 var uuid = require('node-uuid');
-const { Meta } = Card
 import axios from 'axios'
 import Error from '../error';
 axios.defaults.timeout = 1000 * 15;
@@ -54,7 +53,7 @@ export default class Web extends React.Component<any, IState> {
     }
     let _key = localStorage.getItem("_key")
     let _token = localStorage.getItem("_token")
-    axios.post('http://localhost:3000/parse/getsite', { _key, _token })
+    _token && axios.post('http://localhost:3000/parse/getsite', { _key, _token })
       .then(res => {
         if (res.data.code == 200) {
           let { _user_conf } = res.data.Performance
@@ -117,7 +116,7 @@ export default class Web extends React.Component<any, IState> {
     this.props.history.push("/exp/conf");
   }
   render = () => {
-    const { _site, visible, isEmpty, domain, title, resolution, userAgent, language, colorDepth } = this.state
+    const { visible, isEmpty, domain, title, resolution, userAgent, language, colorDepth } = this.state
     // localStorage.clear()
     return (
       <div>
@@ -131,27 +130,12 @@ export default class Web extends React.Component<any, IState> {
                 <EllipsisOutlined key="ellipsis" />,
               ]}
             >
-              {/* <div> */}
               <p>Domain：{domain}</p>
               <p>Title：{title}</p>
               <p>Resolution：{resolution}</p>
               <p>User Agent：{userAgent}</p>
               <p>Language：{language}</p>
               <p>Color Depth：{colorDepth}</p>
-              {/* </div> */}
-              {/* <Meta
-                title={`Site Name：${localStorage.getItem("name")}`}
-                description={`
-                <div>
-                  <p>Domain：${domain}</p>
-                  <p>Title：${title}</p>
-                  <p>Resolution：${resolution}</p>
-                  <p>User Agent：${userAgent}</p>
-                  <p>Language：${language}</p>
-                  <p>Color Depth：${colorDepth}</p>
-                </div>
-                `}
-              /> */}
             </Card>
             :
             <div style={{ paddingTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
